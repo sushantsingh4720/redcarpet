@@ -37,15 +37,18 @@ const List = ({name, user}) => {
             },
             body: JSON.stringify(data)
         });
-        // await fetchTasks();
-    }
-    const saveTask = async () =>{
-        setTasks([...tasks, {name: taskname, detail}]);
+        
+        await fetchTasks();
         setState(0);
-        await createTask();
     }
+    // const saveTask = async () =>{
+    //     setTasks([...tasks, {name: taskname, detail}]);
+    //     setState(0);
+    //     await createTask();
+    // }
 
     const deleteTask = async() =>{
+        console.log(task);
         const response = await fetch(`https://red-carpet-mern.herokuapp.com/api/lists/${task._id}`,  {
             method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
@@ -57,7 +60,7 @@ const List = ({name, user}) => {
         const result = await response.json();
         if(result._id) setState(0);
         await fetchTasks();
-        
+        console.log(task, tasks);
         // console.log(result);
     }
 
@@ -101,9 +104,10 @@ const List = ({name, user}) => {
                 tasks.map((task)=>{
                     return(
                         <div className="container task row" key={task.name} >
-                            <div><input type='checkbox' className="task-checkbox" onClick={(e)=>{
+                            <div><input type='checkbox' className="task-checkbox" onClick={async (e)=>{
                                 setTask(task);
-                                deleteTask();}}/></div>
+                                console.log(task)
+                                await deleteTask();}}/></div>
                             <div>{task.name}</div>
                             <div className="edit" onClick={(e)=>{
                             setTask(task);
@@ -126,7 +130,7 @@ const List = ({name, user}) => {
                     <input type="text" placeholder="Task Name" className="task-input" onChange={(e)=>{setTaskName(e.target.value)}} id="task-name" defaultValue={taskname}/></div>
                     <div><textarea placeholder="Add details" className="task-input task-detail" onChange={(e)=>{setDetail(e.target.value)}} id="task-detail" defaultValue={detail}></textarea></div>
                     {/* <div><input type="date" className="task-input"/></div> */}
-                    <button className="btn" onClick={(e)=> saveTask()}>Save</button> 
+                    <button className="btn" onClick={(e)=> createTask()}>Save</button> 
                     </div>
                 </div>
             }
