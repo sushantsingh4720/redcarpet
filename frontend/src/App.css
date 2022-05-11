@@ -186,6 +186,7 @@ body{
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     padding-left: 0.25rem;
+    position: relative;
 }
 .task-checkbox{
     width: 2rem;
@@ -194,4 +195,17 @@ body{
 }
 .task:hover{
     background-color: rgba(239, 238, 237, 0.879);
+}
+
+.edit{
+    position: absolute;
+    right: 1rem;
+    border: 1px solid rgb(55, 55, 160);
+    width: 1.5rem;
+    height: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
 }

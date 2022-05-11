@@ -6,7 +6,7 @@ const Login = ({setUser, setState}) => {
     const login = async () =>{
         const data = {email, password};
         console.log(data);
-        const response = await fetch('http://localhost:5000/api/users/login',  {
+        const response = await fetch('https://red-carpet-mern.herokuapp.com/api/users/login',  {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             headers: {
