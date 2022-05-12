@@ -5,12 +5,15 @@ const List = ({name, user}) => {
     const [taskname, setTaskName] = useState('');
     const [detail, setDetail] = useState('');
     const [tasks, setTasks] = useState([]);
-    const [task, setTask] = useState({});
+    // const [task, setTask] = useState({});
+    const [id, setId] = useState('');
+    var task ={};
     
     const editTask = () =>{
         setTaskName(task.name);
         setDetail(task.detail);
         setState(2);
+        setId(task._id);
     }
 
     const fetchTasks = async () =>{
@@ -48,7 +51,7 @@ const List = ({name, user}) => {
     // }
 
     const deleteTask = async() =>{
-        console.log(task);
+        console.log("deleting");
         const response = await fetch(`https://red-carpet-mern.herokuapp.com/api/lists/${task._id}`,  {
             method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
@@ -57,17 +60,17 @@ const List = ({name, user}) => {
               'Authorization': `Bearer ${user.token}`
             },
         });
-        const result = await response.json();
-        if(result._id) setState(0);
+        // const result = await response.json();
+        // if(result._id) setState(0);
+        setState(0)
         await fetchTasks();
-        console.log(task, tasks);
+        // console.log(task, tasks);
         // console.log(result);
     }
 
     const updateTask = async() =>{
         const data= {name: taskname, detail};
-        // console.log(task);
-        const response = await fetch(`https://red-carpet-mern.herokuapp.com/api/lists/${task._id}`,  {
+        const response = await fetch(`https://red-carpet-mern.herokuapp.com/api/lists/${id}`,  {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             headers: {
@@ -77,10 +80,10 @@ const List = ({name, user}) => {
             body: JSON.stringify(data)
         });
         setState(0);
-        const result = await response.json();
-        console.log(result);
-        if(result._id) await fetchTasks();
-        
+        // const result = await response.json();
+        // console.log(result);
+        // if(result._id) await fetchTasks();
+        await fetchTasks();
         // console.log(result);
     }
     useEffect(()=>{
@@ -101,17 +104,16 @@ const List = ({name, user}) => {
                 <div> Add a task</div>
             </div>
             {
-                tasks.map((task)=>{
+                tasks.map((tsk)=>{
                     return(
-                        <div className="container task row" key={task.name} >
-                            <div><input type='checkbox' className="task-checkbox" onClick={async (e)=>{
-                                setTask(task);
-                                console.log(task)
-                                await deleteTask();}}/></div>
-                            <div>{task.name}</div>
+                        <div className="container task row" key={tsk._id}  >
+                            <div><input type='checkbox' className="task-checkbox" onClick={(e)=>{
+                                task = tsk;
+                                deleteTask();} }/></div>
+                            <div>{tsk.name}</div>
                             <div className="edit" onClick={(e)=>{
-                            setTask(task);
-                            editTask()}}>🖊</div>
+                                task = tsk;
+                                editTask()}}>🖊</div>
                         </div>
                     )
                 })
