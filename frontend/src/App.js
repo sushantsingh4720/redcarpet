@@ -28,6 +28,7 @@ function App() {
       {
         state === 0 && <Signup setUser={setUser} setState={setState}/>
       }
+      
       {
         state === 1 && <Login setUser={setUser} setState={setState}/>
       }

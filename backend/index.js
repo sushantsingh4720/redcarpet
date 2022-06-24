@@ -19,5 +19,9 @@ app.use(express.urlencoded({extended:true}));
 app.use('/api/lists', require('./routes/listRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 
+app.get('/', (req,res)=>{
+  res.send("Hello welcome to the red carpet");
+});
+
 app.listen(port,()=>console.log(`Server started on port ${port}`));
 
